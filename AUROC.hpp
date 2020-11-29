@@ -22,12 +22,13 @@
 // SOFTWARE.
 // -----------------------------------------------------------------------------
 #pragma once
+
 #include <algorithm>
 
 template<class T>
 double AUROC(const T* y_true, const T* y_pred, size_t n) {
 	for (size_t i = 0; i < n; i++) {
-		if (isnan(y_pred[i]) || isinf(y_pred[i]))
+		if (std::isnan(y_pred[i]) || std::isinf(y_pred[i]))
 			return -1;
 	}
 
