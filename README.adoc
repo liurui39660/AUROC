@@ -22,4 +22,8 @@ C++11 (because of template)
 
 [qanda]
 How fast is it?::
-    On my desktop PC, ~1.35s for ~8M records
+On my desktop PC, ~1.35s for ~8M records
+How accurate is it?::
+    Use cmake to compile and run `Test.cpp` to compare with `sklearn.metrics.roc_auc_score`, the difference is mostly less than 1e-8
+Why not using plain C?::
+    `qsort` array index might be very tedious; otherwise, C11 is required for the additional argument passed to the comparison function
