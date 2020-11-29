@@ -1,12 +1,12 @@
 = AUROC
 
-AUROC/ROC-AUC in C++11
+Header-only AUROC/ROC-AUC in C++11
 
 == Usage
 
 . Copy `AUROC.hpp` to where you need
 . Include `AUROC.hpp`
-. Call `AUROC(y_true, y_pred, n)` and get result
+. Call `AUROC(yTrue, yPred, n)` and get result
 
 == Requirement
 
@@ -14,16 +14,20 @@ C++11 (because of template)
 
 == Argument
 
-* `y_true`: Array of ground truth, negative is 0.0, positive is 1.0
-* `y_pred`: Array of prediction, arbitrary range
-* `n`: Array length, can be smaller than the actual size
+* `T` (template): Type of array elements, should be a floating number type
+* `yTrue`: Array of ground truth labels, 0.0 is negative, 1.0 is positive
+* `yPred`: Array of predicted scores, can be of any range
+* `n`: Number of elements in the array
+* Return: AUROC/ROC-AUC score, range [0.0, 1.0]
 
 == FAQ
 
 [qanda]
 How fast is it?::
 On my desktop PC, ~1.35s for ~8M records
+
 How accurate is it?::
-    Use cmake to compile and run `Test.cpp` to compare with `sklearn.metrics.roc_auc_score`, the difference is mostly less than 1e-8
+Use cmake to compile and run `Test.cpp` to compare with `sklearn.metrics.roc_auc_score`, the difference is mostly less than 1e-8
+
 Why not using plain C?::
-    `qsort` array index might be very tedious; otherwise, C11 is required for the additional argument passed to the comparison function
+`qsort` array index might be very tedious; otherwise, C11 is required for the additional argument passed to the comparison function
