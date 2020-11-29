@@ -1,0 +1,25 @@
+= AUROC
+
+AUROC/ROC-AUC in C++11
+
+== Usage
+
+. Copy `AUROC.hpp` to where you need
+. Include `AUROC.hpp`
+. Call `AUROC(y_true, y_pred, n)` and get result
+
+== Requirement
+
+C++11 (because of template)
+
+== Argument
+
+* `y_true`: Array of ground truth, negative is 0.0, positive is 1.0
+* `y_pred`: Array of prediction, arbitrary range
+* `n`: Array length, can be smaller than the actual size
+
+== FAQ
+
+[qanda]
+How fast is it?::
+    On my desktop PC, ~1.35s for ~8M records
