@@ -23,6 +23,7 @@ C++11 (because of template)
 == FAQ
 
 [qanda]
+
 How fast is it?::
 On my desktop PC, ~1.35s for ~8M records +
 The only `sort` takes ~80% of the running time
