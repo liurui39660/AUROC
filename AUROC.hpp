@@ -34,7 +34,7 @@ template<class T>
 double AUROC(const T* yTrue, const T* yPred, size_t n) {
 	for (size_t i = 0; i < n; i++) {
 		if (std::isnan(yPred[i]) || std::isinf(yPred[i]) || yTrue[i] != 0 && yTrue[i] != 1)
-			return -1;
+			return std::numeric_limits<double>::quiet_NaN();
 	}
 
 	const auto index = new size_t[n];
