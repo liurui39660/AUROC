@@ -6,13 +6,13 @@ Header-only AUROC/ROC-AUC in C++11
 
 . Copy `AUROC.hpp` to where you need
 . Include `AUROC.hpp`
-. Call `AUROC(yTrue, yPred, n)` and get result
+. Call `AUROC(yTrue, yPred, n)` and get the result
 
-== Requirement
+== Requirements
 
-C++11 (because of template)
+C++11
 
-== Argument
+== Arguments
 
 * `T` (template): Type of array elements, should be a floating number type
 * `yTrue`: Array of ground truth labels, 0.0 is negative, 1.0 is positive
@@ -29,8 +29,7 @@ On my desktop PC, ~1.35s for ~8M records. +
 The only `sort` takes ~80% of the running time.
 
 How accurate is it?::
-Use cmake to compile and run `Test.cpp` to compare with `sklearn.metrics.roc_auc_score`. +
-The difference is mostly less than 1e-8.
+From my daily usage, the difference is mostly less than 1e-8.
 
 Why not using plain C?::
 `qsort` array index might be very tedious. +
