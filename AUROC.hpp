@@ -23,6 +23,7 @@
 // -----------------------------------------------------------------------------
 #pragma once
 
+#include <cmath>
 #include <algorithm>
 
 /// @tparam T Type of array elements, should be a floating number type
