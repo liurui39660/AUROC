@@ -29,7 +29,7 @@ On my desktop PC, ~1.35s for ~8M records. +
 The only `sort` takes ~80% of the running time.
 
 How accurate is it?::
-From my daily usage, the difference is mostly less than 1e-8.
+From my daily usage, the difference with `sklearn.metrics.roc_auc_score` is mostly less than 1e-8.
 
 Why not using plain C?::
 `qsort` array index might be very tedious. +
