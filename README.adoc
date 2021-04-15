@@ -8,14 +8,14 @@ Header-only AUROC/ROC-AUC in C++11
 . Include `AUROC.hpp`
 . Call `AUROC(yTrue, yPred, n)` and get the result
 
-== Requirements
+== Requirement
 
-C++11
+* C++11
 
 == Arguments
 
 * `T` (template): Type of array elements, should be a floating number type
-* `yTrue`: Array of ground truth labels, 0.0 is negative, 1.0 is positive
+* `yTrue`: Array of ground truth labels, 0 is negative, 1 is positive
 * `yPred`: Array of predicted scores, can be of any range
 * `n`: Number of elements in the array
 * Return: AUROC/ROC-AUC score, range [0.0, 1.0]
