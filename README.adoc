@@ -1,16 +1,16 @@
 = AUROC
+Rui LIU (@liurui39660)
 
 Header-only AUROC/ROC-AUC in C++11
 
 == Usage
 
-. Copy `AUROC.hpp` to where you need
-. Include `AUROC.hpp`
+. Include `include/AUROC.hpp`
 . Call `AUROC(yTrue, yPred, n)` and get the result
 
 == Requirement
 
-* C++11
+C++11 and standard libraries
 
 == Arguments
 
@@ -20,7 +20,7 @@ Header-only AUROC/ROC-AUC in C++11
 * `n`: Number of elements in the array
 * Return: AUROC/ROC-AUC score, range [0.0, 1.0]
 
-== FAQ
+== Q&A
 
 [qanda]
 
@@ -29,7 +29,10 @@ On my desktop PC, ~1.35s for ~8M records. +
 The only `sort` takes ~80% of the running time.
 
 How accurate is it?::
-From my daily usage, the difference with `sklearn.metrics.roc_auc_score` is mostly less than 1e-8.
+From tests and my daily usage, the difference with `sklearn.metrics.roc_auc_score` is mostly less than 1e-8.
+
+Where are the test code and data?::
+I didn't upload them to GitHub.
 
 Why not using plain C?::
 `qsort` array index might be very tedious. +
