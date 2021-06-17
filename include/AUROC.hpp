@@ -25,7 +25,6 @@
 
 #include <cmath>
 #include <numeric>
-#include <algorithm>
 
 /// @tparam T Type of array elements, should be a floating number type
 /// @param label Array of ground truth labels, 0 is negative, 1 is positive
