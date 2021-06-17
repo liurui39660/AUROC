@@ -71,9 +71,15 @@ double AUROC(const T label[], const T score[], size_t n) {
 		fp[i] /= fp[n - 1];
 	}
 
-	double area = tp[0] * fp[0] / 2; // The first triangle from origin
-	for (size_t i = 0; i < n - 1; i++)
-		area += (tp[i] + tp[i + 1]) * (fp[i + 1] - fp[i]) / 2;
+	auto area = tp[0] * fp[0] / 2; // The first triangle from origin;
+	double partial = 0; // For Kahan summation
+	for (size_t i = 1; i < n; i++) {
+		const auto x = (fp[i] - fp[i - 1]) * (tp[i] + tp[i - 1]) / 2 - partial;
+		const auto sum = area + x;
+		partial = (sum - area) - x;
+		area = sum;
+	}
+
 	delete[] tp;
 	delete[] fp;
 
