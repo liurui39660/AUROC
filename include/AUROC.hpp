@@ -40,8 +40,8 @@ double AUROC(const T label[], const T score[], size_t n) {
 	const auto order = new size_t[n];
 	std::iota(order, order + n, 0);
 	std::sort(order, order + n, [&](size_t a, size_t b) { return score[a] > score[b]; });
-	const auto y = new double[n]; // Desc
-	const auto z = new double[n]; // Desc
+	const auto y = new double[n];
+	const auto z = new double[n];
 	for (size_t i = 0; i < n; i++) {
 		y[i] = label[order[i]];
 		z[i] = score[order[i]];
@@ -56,9 +56,8 @@ double AUROC(const T label[], const T score[], size_t n) {
 			order[top++] = i;
 	order[top++] = n - 1;
 	n = top; // Size of y/z -> sizeof tps/fps
-	delete[] z;
 
-	const auto fp = new double[n];
+	const auto fp = z; // Reuse
 	for (size_t i = 0; i < n; i++) {
 		tp[i] = tp[order[i]]; // order is mono. inc.
 		fp[i] = 1 + order[i] - tp[i]; // Type conversion prevents vectorization
