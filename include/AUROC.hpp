@@ -28,24 +28,24 @@
 #include <algorithm>
 
 /// @tparam T Type of array elements, should be a floating number type
-/// @param yTrue Array of ground truth labels, 0 is negative, 1 is positive
-/// @param yPred Array of predicted scores, can be of any range
-/// @param n Number of elements in the array
+/// @param label Array of ground truth labels, 0 is negative, 1 is positive
+/// @param score Array of predicted scores, can be any real finite number
+/// @param n Number of elements in the array, I assume it's correct
 /// @return AUROC/ROC-AUC score, range [0.0, 1.0]
 template<class T>
-double AUROC(const T* yTrue, const T* yPred, size_t n) {
+double AUROC(const T label[], const T score[], size_t n) {
 	for (size_t i = 0; i < n; i++)
-		if (std::isnan(yPred[i]) || std::isinf(yPred[i]) || yTrue[i] != 0 && yTrue[i] != 1)
+		if (!std::isfinite(score[i]) || label[i] != 0 && label[i] != 1)
 			return std::numeric_limits<double>::quiet_NaN();
 
-	const auto index = new size_t[n];
-	std::iota(index, index + n, 0);
-	std::sort(index, index + n, [&](size_t a, size_t b) { return yPred[a] > yPred[b]; });
+	const auto order = new size_t[n];
+	std::iota(order, order + n, 0);
+	std::sort(order, order + n, [&](size_t a, size_t b) { return score[a] > score[b]; });
 	const auto y = new double[n]; // Desc
 	const auto z = new double[n]; // Desc
 	for (size_t i = 0; i < n; i++) {
-		y[i] = yTrue[index[i]];
-		z[i] = yPred[index[i]];
+		y[i] = label[order[i]];
+		z[i] = score[order[i]];
 	}
 
 	const auto tp = y; // Reuse
@@ -54,34 +54,17 @@ double AUROC(const T* yTrue, const T* yPred, size_t n) {
 	size_t top = 0; // # diff
 	for (size_t i = 0; i < n - 1; i++)
 		if (z[i] != z[i + 1])
-			index[top++] = i;
-	index[top++] = n - 1;
+			order[top++] = i;
+	order[top++] = n - 1;
 	n = top; // Size of y/z -> sizeof tps/fps
 	delete[] z;
 
 	const auto fp = new double[n];
 	for (size_t i = 0; i < n; i++) {
-		tp[i] = tp[index[i]];
-		fp[i] = 1 + index[i] - tp[i];
+		tp[i] = tp[order[i]]; // order is mono. inc.
+		fp[i] = 1 + order[i] - tp[i];
 	}
-	delete[] index;
-
-	const auto tp_diff = new double[n];
-	const auto fp_diff = new double[n];
-	std::adjacent_difference(tp, tp + n, tp_diff);
-	std::adjacent_difference(fp, fp + n, fp_diff);
-	top = 1;
-	for (size_t i = 1; i < n - 1; i++)
-		if (tp_diff[i] != tp_diff[i + 1] || fp_diff[i] != fp_diff[i + 1]) {
-			tp[top] = tp[i];
-			fp[top] = fp[i];
-			top++;
-		}
-	tp[top] = tp[n - 1];
-	fp[top] = fp[n - 1];
-	n = ++top; // Size of tp/fp -> size of optimized tp/fp 
-	delete[] tp_diff;
-	delete[] fp_diff;
+	delete[] order;
 
 	for (size_t i = 0; i < n; i++) {
 		tp[i] /= tp[n - 1];
