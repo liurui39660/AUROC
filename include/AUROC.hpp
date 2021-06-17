@@ -26,13 +26,14 @@
 #include <cmath>
 #include <numeric>
 
-/// @tparam T Type of array elements, should be a floating number type
+/// @tparam T1 Type of array elements, should be a numerical type
+/// @tparam T2 Type of array elements, should be a numerical type
 /// @param label Array of ground truth labels, 0 is negative, 1 is positive
 /// @param score Array of predicted scores, can be any real finite number
 /// @param n Number of elements in the array, I assume it's correct
 /// @return AUROC/ROC-AUC score, range [0.0, 1.0]
-template<class T>
-double AUROC(const T label[], const T score[], int n) {
+template<class T1, class T2>
+double AUROC(const T1 label[], const T2 score[], int n) {
 	for (int i = 0; i < n; i++)
 		if (!std::isfinite(score[i]) || label[i] != 0 && label[i] != 1)
 			return std::numeric_limits<double>::quiet_NaN();
