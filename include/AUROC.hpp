@@ -36,7 +36,7 @@ template<class T1, class T2>
 double AUROC(const T1 label[], const T2 score[], int n) {
 	for (int i = 0; i < n; i++)
 		if (!std::isfinite(score[i]) || label[i] != 0 && label[i] != 1)
-			return std::numeric_limits<double>::quiet_NaN();
+			return std::numeric_limits<double>::signaling_NaN();
 
 	const auto order = new int[n];
 	std::iota(order, order + n, 0);
