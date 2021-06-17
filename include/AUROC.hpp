@@ -62,13 +62,14 @@ double AUROC(const T label[], const T score[], size_t n) {
 	const auto fp = new double[n];
 	for (size_t i = 0; i < n; i++) {
 		tp[i] = tp[order[i]]; // order is mono. inc.
-		fp[i] = 1 + order[i] - tp[i];
+		fp[i] = 1 + order[i] - tp[i]; // Type conversion prevents vectorization
 	}
 	delete[] order;
 
-	for (size_t i = 0; i < n; i++) {
-		tp[i] /= tp[n - 1];
-		fp[i] /= fp[n - 1];
+	const auto tpn = tp[n - 1], fpn = fp[n - 1];
+	for (size_t i = 0; i < n; i++) { // Vectorization
+		tp[i] /= tpn;
+		fp[i] /= fpn;
 	}
 
 	auto area = tp[0] * fp[0] / 2; // The first triangle from origin;
