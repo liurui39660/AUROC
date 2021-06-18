@@ -18,7 +18,7 @@ C++11 and standard libraries
 * `label`: Array of ground truth labels, 0 is negative, 1 is positive
 * `score`: Array of predicted scores, can be any real finite number
 * `n`: Number of elements in the array, I assume it's correct
-* Return: AUROC/ROC-AUC score, range [0.0, 1.0]
+* Return: AUROC/ROC-AUC score, range [0.0, 1.0]; or NaN if inputs are problematic
 
 == Q&A
 
